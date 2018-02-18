@@ -3,7 +3,8 @@
 /**
  * Class CrontabParserTest
  */
-class CrontabParserTest extends PHPUnit_Framework_TestCase {
+class CrontabParserTest extends \PHPUnit\Framework\TestCase
+{
 
     /**
      * @var $Parser exporter\parser\parser
@@ -11,24 +12,25 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
     private $Parser;
 
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->Parser = new exporter\parser\parser();
     }
 
-    private function AssertArrayCountTrue(array $array, $count, $elementtotest) {
-        if (count($array) == $count) {
+    private function AssertArrayCountTrue(array $array, $count, $elementtotest): void
+    {
+        if (count($array) === $count) {
             $this->assertTrue(true);
-        }
-        else {
-            $this->assertTrue(false,$elementtotest);
+        } else {
+            $this->assertTrue(false, $elementtotest);
         }
     }
 
-    private function AssertArrayCountFalse(array $array, $elementtotest) {
+    private function AssertArrayCountFalse(array $array, $elementtotest): void
+    {
         if (count($array) > 1) {
-            $this->assertFalse(true,$elementtotest);
-        }
-        else {
+            $this->assertFalse(true, $elementtotest);
+        } else {
             $this->assertFalse(false);
         }
     }
@@ -36,120 +38,150 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
     /**
      * @group element
      */
-    public function testCrontabElementMinutesTrue() {
+    public function testCrontabElementMinutesTrue(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['min']['true'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexmin);
-            $this->AssertArrayCountTrue($matches,2,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexmin);
+            $this->AssertArrayCountTrue($matches, 2, $elementtotest);
         }
     }
 
     /**
      * @group element
      */
-    public function testCrontabElementMinutesFalse() {
+    public function testCrontabElementMinutesFalse(): void
+    {
+        /** @noinspection ForeachSourceInspection */
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['min']['false'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexmin);
-            $this->AssertArrayCountFalse($matches,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexmin);
+            $this->AssertArrayCountFalse($matches, $elementtotest);
         }
     }
+
     /**
      * @group element
      */
-    public function testCrontabElementHoursTrue() {
+    public function testCrontabElementHoursTrue(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['hrs']['true'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexhrs);
-            $this->AssertArrayCountTrue($matches,2,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexhrs);
+            $this->AssertArrayCountTrue($matches, 2, $elementtotest);
         }
     }
 
     /**
      * @group element
      */
-    public function testCrontabElementHoursFalse() {
+    public function testCrontabElementHoursFalse(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['hrs']['false'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexhrs);
-            $this->AssertArrayCountFalse($matches,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexhrs);
+            $this->AssertArrayCountFalse($matches, $elementtotest);
         }
     }
+
     /**
      * @group element
      */
-    public function testCrontabElementDomTrue() {
+    public function testCrontabElementDomTrue(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['dom']['true'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexdom);
-            $this->AssertArrayCountTrue($matches,2,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexdom);
+            $this->AssertArrayCountTrue($matches, 2, $elementtotest);
         }
     }
+
     /**
      * @group element
      */
-    public function testCrontabElementDomFalse() {
+    public function testCrontabElementDomFalse(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['dom']['false'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexdom);
-            $this->AssertArrayCountFalse($matches,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexdom);
+            $this->AssertArrayCountFalse($matches, $elementtotest);
         }
     }
+
     /**
      * @group element
      */
-    public function testCrontabElementMonTrue() {
+    public function testCrontabElementMonTrue(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['mon']['true'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexmon);
-            $this->AssertArrayCountTrue($matches,2,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexmon);
+            $this->AssertArrayCountTrue($matches, 2, $elementtotest);
         }
     }
 
     /**
      * @group element
      */
-    public function testCrontabElementMonFalse() {
+    public function testCrontabElementMonFalse(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['mon']['false'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexmon);
-            $this->AssertArrayCountFalse($matches,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexmon);
+            $this->AssertArrayCountFalse($matches, $elementtotest);
         }
     }
 
     /**
      * @group element
      */
-    public function testCrontabElementDowTrue() {
+    public function testCrontabElementDowTrue(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['dow']['true'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexdow);
-            $this->AssertArrayCountTrue($matches,2,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexdow);
+            $this->AssertArrayCountTrue($matches, 2, $elementtotest);
         }
     }
 
     /**
      * @group element
      */
-    public function testCrontabElementDowFalse() {
+    public function testCrontabElementDowFalse(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->ElementsToTest['dow']['false'] as $elementtotest) {
-            $matches = $this->CheckElement($elementtotest,\exporter\regex::$regexdow);
-            $this->AssertArrayCountFalse($matches,$elementtotest);
+            $matches = $this->CheckElement($elementtotest, \exporter\regex::$regexdow);
+            $this->AssertArrayCountFalse($matches, $elementtotest);
         }
     }
 
     /**
      *
      */
-    public function testCrontabLinesTrue() {
+    public function testCrontabLinesTrue(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->LinesToTest['true'] as $line) {
-            $this->assertTrue($this->Parser->parseLine($line)['state'],$line);
+            $this->assertTrue($this->Parser->parseLine($line)['state'], $line);
         }
     }
 
     /**
      *
      */
-    public function testCrontabLinesFalse() {
+    public function testCrontabLinesFalse(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->LinesToTest['false'] as $line) {
-            $this->assertFalse($this->Parser->parseLine($line)['state'],$line);
+            $this->assertFalse($this->Parser->parseLine($line)['state'], $line);
         }
     }
 
-    private $ElementsToTest = array(
+    private /** @noinspection PropertyCanBeStaticInspection */
+        $ElementsToTest = array(
         'min' => array(
-            'true' => array(
+            'true'  => array(
                 '0-5',
                 '1,3,5',
                 '*',
@@ -164,7 +196,7 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
             )
         ),
         'hrs' => array(
-            'true' => array(
+            'true'  => array(
                 '0-5',
                 '1,3,5',
                 '*',
@@ -177,7 +209,7 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
             )
         ),
         'dom' => array(
-            'true' => array(
+            'true'  => array(
                 '0-5',
                 '1,3,5',
                 '*',
@@ -190,7 +222,7 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
             )
         ),
         'mon' => array(
-            'true' => array(
+            'true'  => array(
                 '0-5',
                 '1,3,5',
                 '*',
@@ -203,7 +235,7 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
             )
         ),
         'dow' => array(
-            'true' => array(
+            'true'  => array(
                 '0-5',
                 '1,3,5',
                 '*',
@@ -223,7 +255,7 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
      * @var array
      */
     private $LinesToTest = array(
-        'true' => array(
+        'true'  => array(
             // '33 08 10 06 * /home/ramesh/full-backup'
             '12-12 11,12,12 11,2,3 12,12,12 1,2,3 /home/ramesh/bin/incremental-backup',
             '00     09-18 *      * 1-5 /home/ramesh/bin/check-db-status', //tabs
@@ -233,7 +265,8 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
             '00    09-18 *      * 1-5 /home/ramesh/bin/check-db-status', //tabs
             '10 * * * * /home/ramesh/check-disk-space',
             '* * * * * CMDramesh',
-            '* * * * * CMDramesh #test1234'
+            '* * * * * CMDramesh #test1234',
+            '##*/5 * * * * sh /root/test2'
         ),
         'false' => array(
             '00 09-18 * *  /home/ramesh/bin/check-db-status',
@@ -249,12 +282,12 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
      * @internal param $elementtype
      * @internal param $elementmin
      */
-    private Function CheckElement($elementtotest,$regex) {
-        if ($regex){
-            if (preg_match('/^(' . $regex . ')$/',$elementtotest,$matches)) {
-                return $matches;
-            }
+    private Function CheckElement($elementtotest, $regex): array
+    {
+        if ($regex && preg_match('/^(' . $regex . ')$/', $elementtotest, $matches)) {
+            return $matches;
         }
+
         return array();
     }
 
@@ -262,7 +295,7 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
      * @var array
      */
     private $LinesToTestinactive = array(
-        'true' => array(
+        'true'  => array(
             '#123# * * * * * CMDramesh',
             '## tmp deaktiviert ## * * * * * echo "test"'
         ),
@@ -273,7 +306,7 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
     );
 
     private $LinesToTestWithComment = array(
-        'true' => array(
+        'true'  => array(
             '* * * * * CMDramesh #123',
             '* * * * * CMDramesh ### 123'
         ),
@@ -284,7 +317,7 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
     );
 
     private $LinesToTestInactiveWithComment = array(
-        'true' => array(
+        'true'  => array(
             '#123# * * * * * CMDramesh #123',
             '### 13444 ##* * * * * CMDramesh ### 123'
         ),
@@ -297,59 +330,73 @@ class CrontabParserTest extends PHPUnit_Framework_TestCase {
     /**
      *
      */
-    public function testCrontabLinesInactiveTrue() {
+    public function testCrontabLinesInactiveTrue(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->LinesToTestinactive['true'] as $line) {
             $parseLineInactive = $this->Parser->parseLine($line);
-            $this->assertTrue($parseLineInactive['job'] == exporter\parser\parser::JOB_INACTIVE_WITHOUT_COMMENT);
+            $this->assertEquals($parseLineInactive['job'], exporter\parser\parser::JOB_INACTIVE_WITHOUT_COMMENT);
         }
     }
 
     /**
      *
      */
-    public function testCrontabLinesInactiveFalse() {
+    public function testCrontabLinesInactiveFalse(): void
+    {
+        /** @noinspection ForeachSourceInspection */
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->LinesToTestinactive['false'] as $line) {
             $parseLineInactive = $this->Parser->parseLine($line);
-            $this->assertFalse($parseLineInactive['job'] == exporter\parser\parser::JOB_INACTIVE_WITHOUT_COMMENT);
+            $this->assertNotEquals($parseLineInactive['job'], exporter\parser\parser::JOB_INACTIVE_WITHOUT_COMMENT);
         }
     }
 
     /**
      *
      */
-    public function testCrontabLinesWithCommentTrue() {
+    public function testCrontabLinesWithCommentTrue(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->LinesToTestWithComment['true'] as $line) {
             $parseLineWithComment = $this->Parser->parseLine($line);
-            $this->assertTrue($parseLineWithComment['job'] == exporter\parser\parser::JOB_WITH_COMMENT);
+            $this->assertEquals($parseLineWithComment['job'], exporter\parser\parser::JOB_WITH_COMMENT);
         }
     }
 
     /**
      *
      */
-    public function testCrontabLinesWithCommentFalse() {
+    public function testCrontabLinesWithCommentFalse(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->LinesToTestWithComment['false'] as $line) {
             $parseLineWithComment = $this->Parser->parseLine($line);
-            $this->assertFalse($parseLineWithComment['job'] == exporter\parser\parser::JOB_WITH_COMMENT);
-        }
-    }
-    /**
-     *
-     */
-    public function testCrontabLinesInactiveWithCommentTrue() {
-        foreach ($this->LinesToTestInactiveWithComment['true'] as $line) {
-            $parseLineInactiveWithComments = $this->Parser->parseLine($line);
-            $this->assertTrue($parseLineInactiveWithComments['job'] == exporter\parser\parser::JOB_INACTIVE_WITH_COMMENT);
+            $this->assertNotEquals($parseLineWithComment['job'], exporter\parser\parser::JOB_WITH_COMMENT);
         }
     }
 
     /**
      *
      */
-    public function testCrontabLinesInactiveWithCommentFalse() {
+    public function testCrontabLinesInactiveWithCommentTrue(): void
+    {
+        /** @noinspection ForeachSourceInspection */
+        foreach ($this->LinesToTestInactiveWithComment['true'] as $line) {
+            $parseLineInactiveWithComments = $this->Parser->parseLine($line);
+            $this->assertEquals($parseLineInactiveWithComments['job'], exporter\parser\parser::JOB_INACTIVE_WITH_COMMENT);
+        }
+    }
+
+    /**
+     *
+     */
+    public function testCrontabLinesInactiveWithCommentFalse(): void
+    {
+        /** @noinspection ForeachSourceInspection */
         foreach ($this->LinesToTestInactiveWithComment['false'] as $line) {
             $parseLineInactiveWithComments = $this->Parser->parseLine($line);
-            $this->assertFalse($parseLineInactiveWithComments['job'] == exporter\parser\parser::JOB_INACTIVE_WITH_COMMENT);
+            $this->assertNotEquals($parseLineInactiveWithComments['job'], exporter\parser\parser::JOB_INACTIVE_WITH_COMMENT);
         }
     }
 }

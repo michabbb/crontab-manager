@@ -1,28 +1,33 @@
 {
-  "name": "fschabmeyer/crontab-manager",
+  "name": "michabbb/crontab-manager",
+  "license": "MIT",
   "authors": [
     {
       "name": "Michael Bladowski",
       "email": "info@macropage.de"
-    },
-    {
-      "name": "Felix Schabmeyer",
-      "email": "fschabmeyer@googlemail.com"
     }
   ],
+  "config": {
+    "platform": {
+      "php": "7.1.14"
+    }
+  },
+  "prefer-stable": true,
   "require": {
-    "phpunit/phpunit": "^4.7",
-    "php": ">=5.5 <7.0",
-    "ext-ssh2" : "*",
-    "pimple/pimple": "~3.0",
-    "ulrichsg/getopt-php": "^2.3"
+    "roave/security-advisories": "dev-master",
+    "php": ">=7.1",
+    "pimple/pimple": "3.2.*",
+    "ulrichsg/getopt-php": "3.1.*",
+    "phpseclib/phpseclib":"2.0.*"
   },
   "autoload": {
     "classmap": [
-      "inc/","objects/"
+      "inc/",
+      "objects/"
     ]
   },
   "require-dev": {
-    "codeclimate/php-test-reporter": "dev-master"
+    "codeclimate/php-test-reporter": "dev-master",
+    "phpunit/phpunit": "7.0.*"
   }
 }

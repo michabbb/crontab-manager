@@ -3,11 +3,11 @@ require_once 'vendor/autoload.php';
 
 use exporter\config\config;
 use exporter\parser\parser;
+use GetOpt\GetOpt;
+use GetOpt\Option;
 use Pimple\Container;
-use Ulrichsg\Getopt\Getopt;
-use Ulrichsg\Getopt\Option;
 
-$getopt = new Ulrichsg\Getopt\Getopt(array(
+$getopt = new Getopt(array(
     new Option('m', 'mode', Getopt::REQUIRED_ARGUMENT),
     new Option('t', 'todo', Getopt::OPTIONAL_ARGUMENT)
 ));
@@ -20,25 +20,46 @@ $container = new Container();
 try {
     $config = new config();
 } catch (\Exception $e) {
-    exceptionhandler::handler("Unable to init config",$e);
+    exceptionhandler::handler('Unable to init config',$e);
 }
 
 $container['config'] = $config;
 
 $parser = new parser();
-$arrayallcrontabs = array();
+$arrayallcrontabs = [];
 
 foreach ($config->getServers() as $server => $serverconfig) {
-    echo "Servername: " . $serverconfig['servername'] . "\n";
-    echo "IP        : " . $serverconfig['serverip'] . "\n";
-    $crontab = \exporter\ssh\ssh::getCrontabFromRemoteServer($serverconfig['serverip'], 'root');
-    $crontab_parsed = $parser->getParsedCrontab($crontab);
-    echo "Array aus getParsedCrontab: ";
-    $arrayallcrontabs = array_merge($arrayallcrontabs, $crontab_parsed);
+    echo 'Servername: ' . $serverconfig['servername'] . "\n";
+    echo 'IP        : ' . $serverconfig['serverip'] . "\n";
+
+    $privatekey = (array_key_exists('privatekey',$serverconfig) && $serverconfig['privatekey']) ? $serverconfig['privatekey'] : null;
+
+    try {
+        $SSH = new \exporter\ssh($serverconfig['serverip'], $serverconfig['serverport'],$serverconfig['user'],'',$privatekey);
+        $SSH->setDebug(true);
+        $SSH->login();
+    } catch (RuntimeException $e) {
+        throw new RuntimeException($e);
+    }
+
+    $crontab = $SSH->getCrontabFromRemoteServer($serverconfig['user']);
+    if ($crontab!==false) {
+
+        $crontab_parsed = $parser->getParsedCrontab($crontab);
+        //print_r($crontab_parsed);
+        echo 'Array aus getParsedCrontab: ';
+        $arrayallcrontabs[$server] = $crontab_parsed;
+    }
 }
+
+//$arrayallcrontabs = array_merge(...$arrayallcrontabs);
+
 //print_r($crontab_parsed);
 print_r($arrayallcrontabs);
 
+exit;
+
+/** @var array[] $groupdata */
 foreach ($arrayallcrontabs as $groups => $groupdata) {
     $jobGroup = new \exporter\objects\db\jobGroup();
     if ($groupdata['groupcomment']) {

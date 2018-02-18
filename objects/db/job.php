@@ -32,16 +32,17 @@ class job implements job_interface {
     /**
      * @return boolean
      */
-    public function isActive() {
+    public function isActive() : bool {
         return $this->active;
     }
 
     /**
      * @return jobGroup
      */
-    public function getGroup() {
+    public function getGroup() : jobGroup {
         return $this->group;
     }
+
     private $command;
     private $m;
     private $h;
@@ -56,7 +57,7 @@ class job implements job_interface {
     /**
      * @param boolean $active
      */
-    public function setActive($active) {
+    public function setActive($active) : void {
         $this->active = $active;
     }
     /**
@@ -67,38 +68,38 @@ class job implements job_interface {
     /**
      * @param jobGroup $group
      */
-    public function setGroup(jobGroup $group) {
+    public function setGroup(jobGroup $group) : void {
         $this->group = $group;
     }
 
     /**
      * @param mixed $comment
      */
-    public function setComment($comment) {
+    public function setComment($comment) : void {
         $this->comment = $comment;
-        utils::debug("setComment",$comment);
+        utils::debug('setComment',$comment);
     }
 
     /**
      * @param mixed $comment_inactive
      */
-    public function setCommentInactive($comment_inactive) {
+    public function setCommentInactive($comment_inactive) : void {
         $this->comment_inactive = $comment_inactive;
-        utils::debug("setCommentInactive",$comment_inactive);
+        utils::debug('setCommentInactive',$comment_inactive);
     }
 
     /**
      * @param mixed $command
      */
-    public function setCommand($command) {
+    public function setCommand($command) : void {
         $this->command = $command;
-        utils::debug("setCommand",$command);
+        utils::debug('setCommand',$command);
     }
 
     /**
      * @return array
      */
-    public function getTime() {
+    public function getTime() : array {
         return [
             'm'   => $this->m,
             'h'   => $this->h,
@@ -106,7 +107,7 @@ class job implements job_interface {
             'mon' => $this->mon,
             'dow' => $this->dow,
         ];
-    }
+    }/** @noinspection MoreThanThreeArgumentsInspection */
 
     /**
      * @param $m
@@ -115,17 +116,17 @@ class job implements job_interface {
      * @param $mon
      * @param $dow
      */
-    public function setTime($m, $h, $dom, $mon, $dow) {
+    public function setTime($m, $h, $dom, $mon, $dow) : void {
         $this->m   = $m;
         $this->h   = $h;
         $this->dom = $dom;
         $this->mon = $mon;
         $this->dow = $dow;
-        utils::debug("set m",$m);
-        utils::debug("set h",$h);
-        utils::debug("set dom",$dom);
-        utils::debug("set mon",$mon);
-        utils::debug("set dow",$dow);
+        utils::debug('set m',$m);
+        utils::debug('set h',$h);
+        utils::debug('set dom',$dom);
+        utils::debug('set mon',$mon);
+        utils::debug('set dow',$dow);
     }
 
 }

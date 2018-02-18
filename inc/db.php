@@ -19,7 +19,10 @@ class db implements db_interface {
         $this->container = $container;
     }
 
-    public function connect() {
+    /**
+     * @return array
+     */
+    public function connect() : array {
         $this->link = new \mysqli(
             $this->container['config']['db']['host'],
             $this->container['config']['db']['user'],
@@ -33,9 +36,10 @@ class db implements db_interface {
                     'errno' => $this->link->connect_errno,
                     'error' => $this->link->connect_error
             );
-        } else {
-            $this->link->set_charset($this->container['config']['db']['charset']);
         }
+
+        $this->link->set_charset($this->container['config']['db']['charset']);
+
         return array(
             'state'  => true,
             'server' => array(
@@ -47,7 +51,12 @@ class db implements db_interface {
         );
     }
 
-    public function query($sql,array $params = array()) {
+    /**
+     * @param $sql
+     * @param array $params
+     * @return array
+     */
+    public function query($sql, array $params = array()) : array {
         $state           = false;
         $error           = null;
         $result          = array();
@@ -71,10 +80,11 @@ class db implements db_interface {
 
         if ($params) {
             foreach ($params as $value) {
+                //TODO handle false
                 $paramType               = utils::getParamType($value);
                 $paramsWithTypes[$value] = $paramType;
             }
-            if(count($paramsWithTypes)) {
+            if(\count($paramsWithTypes)) {
                 $bind_names[] = implode('',array_values($paramsWithTypes));
                 $i = 0;
                 foreach ($paramsWithTypes as $param => $type) {
@@ -84,7 +94,7 @@ class db implements db_interface {
                     $i++;
                 }
                 print_r($bind_names);
-                call_user_func_array(array($stmt,'bind_param'),$bind_names);
+                \call_user_func_array(array($stmt, 'bind_param'),$bind_names);
             }
         }
         if (!$stmt->execute()) {
@@ -104,7 +114,7 @@ class db implements db_interface {
                     $fields[$var] = &$$var;
                 }
 
-                call_user_func_array(array($stmt, 'bind_result'), $fields);
+                \call_user_func_array(array($stmt, 'bind_result'), $fields);
 
                 $i = 0;
                 while ($stmt->fetch()) {
@@ -130,7 +140,10 @@ class db implements db_interface {
         );
     }
 
-    public function disconnect() {
+    /**
+     *
+     */
+    public function disconnect() : void {
         $this->link->close();
     }
 
