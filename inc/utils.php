@@ -23,7 +23,7 @@ class utils
             return 'd';
         }
 
-        return false;
+        return 's';
     }
 
     /**
@@ -32,8 +32,8 @@ class utils
      */
     public static function debug($mode, $txt)
     {
-        $trace = debug_backtrace();
-        echo $trace[1]['class'] . ' : MODE: ' . $mode . ' -> ' . $txt . "\n";
+        //$trace = debug_backtrace();
+        //echo $trace[1]['class'] . ' : MODE: ' . $mode . ' -> ' . $txt . "\n";
     }
 
     /**

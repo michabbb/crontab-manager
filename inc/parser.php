@@ -73,6 +73,7 @@ class parser
                             $return[$group]['groupcomment'] .= substr($crontabline, 1) . "\n";
                         }
 
+                        $return[$group]['groupcomment'] = trim($return[$group]['groupcomment']);
 
                         //    $return[$group]['groupcomment'] .= substr($crontabline, 1) . "\n";
                     }
@@ -110,9 +111,9 @@ class parser
 
 //                    print_r($parsedline);
                     $return[$group]['jobs'][] = array(
-                        'comment'          => $comment,
-                        'line'             => $crontabline,
-                        'comment_inactive' => $commentinactive,
+                        'comment'          => trim($comment),
+                        'line'             => trim($crontabline),
+                        'comment_inactive' => trim($commentinactive),
                         'matches'          => array_combine($keystomatch, $parsedline['matches'])
                     );
                     $x++;

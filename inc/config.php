@@ -17,22 +17,32 @@ class config implements \ArrayAccess {
     /**
      * @return array
      */
-    public function getServers() {
+    public function getServers(): array
+    {
         return $this->Servers;
     }
-    private $Servers = array();
+
+    /**
+     * @var array|bool
+     */
+    private $Servers;
 
     public function __construct() {
         $this->Config  = $this->getConfigFile('config/config.ini');
         $this->Servers = $this->getConfigFile('config/server.ini');
     }
 
+    /**
+     * @param $filename
+     * @return array|bool
+     * @throws \RuntimeException
+     */
     private function getConfigFile($filename) {
         if (file_exists($filename)) {
             return parse_ini_file($filename, true);
-        } else {
-            throw new \Exception('missing file: '.$filename);
         }
+
+        throw new \RuntimeException('missing file: '.$filename);
     }
 
     /**

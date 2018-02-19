@@ -19,6 +19,21 @@ class db implements db_interface {
         $this->container = $container;
     }
 
+    public function begin(): void
+    {
+        $this->link->begin_transaction();
+    }
+
+    public function commit(): void
+    {
+        $this->link->commit();
+    }
+
+    public function rollback(): void
+    {
+        $this->link->rollback();
+    }
+
     /**
      * @return array
      */
@@ -57,6 +72,7 @@ class db implements db_interface {
      * @return array
      */
     public function query($sql, array $params = array()) : array {
+
         $state           = false;
         $error           = null;
         $result          = array();
@@ -79,21 +95,21 @@ class db implements db_interface {
         }
 
         if ($params) {
-            foreach ($params as $value) {
+            foreach ($params as $i => $value) {
                 //TODO handle false
                 $paramType               = utils::getParamType($value);
-                $paramsWithTypes[$value] = $paramType;
+                $paramsWithTypes[$i] = ['value' => $value, 'paramtype' => $paramType];
             }
+            //print_r($paramsWithTypes);
             if(\count($paramsWithTypes)) {
-                $bind_names[] = implode('',array_values($paramsWithTypes));
-                $i = 0;
-                foreach ($paramsWithTypes as $param => $type) {
+                $bind_names[] = implode('',array_column($paramsWithTypes,'paramtype'));
+                //print_r($bind_names);
+                foreach ($paramsWithTypes as $i => $paramtype) {
                     $bind_name = 'bind' . $i;
-                    $$bind_name = $param;
+                    $$bind_name = $paramtype['value'];
                     $bind_names[] = &$$bind_name;
-                    $i++;
                 }
-                print_r($bind_names);
+                //print_r($bind_names);
                 \call_user_func_array(array($stmt, 'bind_param'),$bind_names);
             }
         }
@@ -136,7 +152,8 @@ class db implements db_interface {
             'affected_rows' => $affected_rows,
             'error'         => $error,
             'sql'           => $sql,
-            'params'        => $paramsWithTypes
+            'params'        => $paramsWithTypes,
+            'last_insert_id'=> $this->link->insert_id
         );
     }
 

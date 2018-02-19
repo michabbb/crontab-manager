@@ -7,6 +7,11 @@ class job implements job_interface {
 
     private $comment;
     private $comment_inactive;
+    private $user;
+    /**
+     * @var server
+     */
+    private $server;
 
     /**
      * @return mixed
@@ -127,6 +132,38 @@ class job implements job_interface {
         utils::debug('set dom',$dom);
         utils::debug('set mon',$mon);
         utils::debug('set dow',$dow);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServer() : server
+    {
+        return $this->server;
+    }
+
+    /**
+     * @param mixed $server
+     */
+    public function setServer(server $server): void
+    {
+        $this->server = $server;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
     }
 
 }

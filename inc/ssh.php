@@ -128,6 +128,11 @@ class ssh {
         }
     }
 
+    public function disconnect(): void
+    {
+        $this->sftp->disconnect();
+    }
+
     public function put($localfile,$remotefile): bool
     {
         return $this->sftp->put($remotefile, $localfile,1 );
