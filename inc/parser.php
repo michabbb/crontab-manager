@@ -17,6 +17,26 @@ class parser
     public const JOB_INACTIVE_WITH_COMMENT = 3;
     public const JOB_INACTIVE_WITHOUT_COMMENT = 4;
 
+
+	/**
+	 * @param $config
+	 *
+	 * @return array
+	 */
+	public function parseNagiosNrpeCfg($config): array {
+		echo $config."\n";
+    	$commands = explode("\n",$config);
+    	$commands_parsed = [];
+    	foreach ($commands as $line) {
+			[$command_name,$command_cmd] = explode('=', $line, 2);
+			if ($command_name) {
+				preg_match('/^command\[(.*)\]/',$command_name,$matches);
+				$commands_parsed[$matches[1]] = $command_cmd;
+			}
+		}
+		return $commands_parsed;
+	}
+
     /**
      * @return array
      */
