@@ -78,7 +78,7 @@ class jobGroup {
     {
         $crg_id = $this->getGroupCommentFromDb($this->comment);
         foreach ($this->jobList as $job) {
-            $ser_id = $this->getServerFromDb($job->getServer());
+            $ser_id = $job->getServer()->getServerFromDb();
             $ret = $this->saveJob($job,$crg_id,$ser_id);
             if (!$ret['state']) {
                 throw new \RuntimeException(print_r($ret,1));
@@ -135,13 +135,12 @@ class jobGroup {
         return $ret_ins['last_insert_id'];
     }
 
-    private function getServerFromDb(server $server) {
-        $ret = $this->db->query('SELECT * FROM server WHERE ser_ip=?',[$server->getIp()]);
-        if ($ret['numrows']) {
-            return $ret['result'][0]['ser_id'];
-        }
-        $ret_ins = $this->db->query('INSERT INTO server SET ser_ip=?,ser_descr=?',[$server->getIp(),$server->getDescr()]);
-        return $ret_ins['last_insert_id'];
-    }
+    public function getall() {
+		return $this->db->query('SELECT
+										 a.cro_active,a.cro_user,a.cro_m,a.cro_h,a.cro_dom,a.cro_mon,a.cro_dow,a.cro_command,cg.crg_comment,cg.crg_active,s.ser_ip,s.ser_descr
+									FROM crontabmanager.crontab_to_server a
+									INNER JOIN server s ON a.cro_ser_id = s.ser_id
+									LEFT OUTER JOIN crontab_groups cg ON a.cro_crg_id = cg.crg_id');
+	}
 
 }
