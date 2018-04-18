@@ -5,11 +5,18 @@ namespace exporter\utils;
 class utils
 {
 
+	/**
+	 * @return bool
+	 */
+	public static function isCLI(): bool {
+		return PHP_SAPI === 'cli';
+	}
+
     /**
      * @param $value
      * @return bool|string
      */
-    public static function getParamType($value)
+    public static function getParamType($value) : string
     {
         if (\is_int($value)) {
             return 'i';
@@ -30,8 +37,7 @@ class utils
      * @param $mode
      * @param $txt
      */
-    public static function debug($mode, $txt)
-    {
+    public static function debug($mode, $txt): void {
         //$trace = debug_backtrace();
         //echo $trace[1]['class'] . ' : MODE: ' . $mode . ' -> ' . $txt . "\n";
     }
@@ -40,7 +46,7 @@ class utils
      * @param $dir
      * @return mixed
      */
-    public static function find_all_files($dir)
+    public static function find_all_files($dir) : array
     {
         $root = scandir($dir, SCANDIR_SORT_ASCENDING);
         $result = array();
