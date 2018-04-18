@@ -12,7 +12,8 @@ interface job_interface {
     public function setComment($comment);
     public function setCommentInactive($comment_inactive);
     public function setCommand($command);
-    public function setTime($m, $h, $dom, $mon, $dow);
+	/** @noinspection MoreThanThreeArgumentsInspection */
+	public function setTime($m, $h, $dom, $mon, $dow);
     public function setActive($active);
     public function setGroup(jobGroup $group);
 }
