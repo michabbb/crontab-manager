@@ -85,6 +85,19 @@ class ssh {
         return false;
     }
 
+	/**
+	 * @param string $user
+	 * @return bool|array
+	 */
+	public function getNagiosFromRemoteServer(string $user)
+	{
+		[$exitcode,$nrpe_config] = $this->exec("cat /etc/nagios/nrpe.cfg|grep '^command\['");
+		if ($exitcode===0) {
+			return $nrpe_config;
+		}
+		return false;
+	}
+
     /**
      * @return bool|string
      */
